@@ -42,6 +42,11 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "ignoreDeprecations": "6.0"
-  }
+    // "ignoreDeprecations": "6.0"
+  },
+   "exclude": [
+    "node_modules",
+    "dist",
+    "prisma.config.ts"
+  ]
 }
