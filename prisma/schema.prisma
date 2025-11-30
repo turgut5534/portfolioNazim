@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+
+model users {
+  id         Int          @id @default(autoincrement())
+  fullname   String       @db.VarChar(150)
+  email      String       @unique @db.VarChar(150)
+  password   String       @db.VarChar(255)
+  age        Int
+  photourl   String?      @db.VarChar(255)
+  summary    String?      @db.Text
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+
+  user_info          user_info?
+  user_titles        user_titles[]
+  user_skills        user_skills[]
+  user_experiences   user_experiences[]
+  portfolios         portfolios[]
+}
+
+// -------------------------------
+// USER INFO (1-to-1)
+// -------------------------------
+model user_info {
+  id         Int      @id @default(autoincrement())
+  user_id    Int      @unique
+  address    String   @db.VarChar(255)
+  phone      String   @db.VarChar(50)
+  instagram  String?  @db.VarChar(255)
+  twitter    String?  @db.VarChar(255)
+  linkedIn   String?  @db.VarChar(255)
+  facebook   String?  @db.VarChar(255)
+  degree     String   @db.VarChar(255)
+  cv_url     String?  @db.VarChar(255)
+  github     String?  @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// -------------------------------
+// USER TITLES
+// -------------------------------
+model user_titles {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  title      String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// -------------------------------
+// USER SKILLS
+// -------------------------------
+model user_skills {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  title      String   @db.VarChar(150)
+  grade      Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// -------------------------------
+// USER EXPERIENCES
+// -------------------------------
+model user_experiences {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  title      String   @db.VarChar(255)
+  from       DateTime @map("from")
+  to         DateTime? @map("to")
+  is_present Boolean  @default(false)
+  description String  @db.Text
+  place      String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// -------------------------------
+// PORTFOLIOS
+// -------------------------------
+model portfolios {
+  id         Int        @id @default(autoincrement())
+  user_id    Int
+  title      String     @db.VarChar(255)
+  client     String?    @db.VarChar(255)
+  date       DateTime
+  url        String?    @db.VarChar(255)
+  thumbnail  String?    @db.VarChar(255)
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+
+  users                 users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  portfolio_descriptions portfolio_descriptions[]
+  portfolio_categories    portfolio_categories[]
+}
+
+// -------------------------------
+// PORTFOLIO DESCRIPTIONS
+// -------------------------------
+model portfolio_descriptions {
+  id           Int      @id @default(autoincrement())
+  portfolio_id Int
+  description  String   @db.Text
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  portfolios portfolios @relation(fields: [portfolio_id], references: [id], onDelete: Cascade)
+}
+
+// -------------------------------
+// CATEGORIES
+// -------------------------------
+model categories {
+  id         Int                  @id @default(autoincrement())
+  title      String               @unique @db.VarChar(255)
+  created_at DateTime             @default(now())
+  updated_at DateTime             @updatedAt
+
+  portfolio_categories portfolio_categories[]
+}
+
+// -------------------------------
+// PORTFOLIO <-> CATEGORIES (M2M)
+// -------------------------------
+model portfolio_categories {
+  id           Int        @id @default(autoincrement())
+  category_id  Int
+  portfolio_id Int
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+
+  categories categories @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  portfolios portfolios @relation(fields: [portfolio_id], references: [id], onDelete: Cascade)
+}
