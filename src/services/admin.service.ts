@@ -1,0 +1,62 @@
+import { prisma } from "../lib/prisma.js";
+import bcrypt from "bcrypt";
+
+export const userService = {
+    
+  async doLogin(email: string, password: string) {
+    if (!email || !password) {
+      throw new Error("Email and password are required.");
+    }
+
+    const user = await prisma.users.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error("Invalid email or password.");
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      throw new Error("Invalid email or password.");
+    }
+
+    // return safe fields
+    return {
+      id: user.id,
+      email: user.email,
+      fullname: user.fullname,
+    };
+  },
+
+  async saveUser(email: string, password: string, fullname: string, age: number) {
+    if (!email || !password) {
+      throw new Error("Email and password are required.");
+    }
+
+    const existing = await prisma.users.findUnique({
+      where: { email },
+    });
+
+    if (existing) {
+      throw new Error("User already exists.");
+    }
+
+    const hashed = await bcrypt.hash(password, 10);
+
+    const user = await prisma.users.create({
+      data: {
+        email,
+        password: hashed,
+        fullname,
+        age,
+      },
+      select: {
+        id: true,
+        email: true,
+      },
+    });
+
+    return user;
+  },
+};

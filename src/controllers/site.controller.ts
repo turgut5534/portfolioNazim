@@ -6,7 +6,7 @@ export const homePage = async (req: Request, res: Response, next: NextFunction) 
     const user = await userService.getOne();  // <-- FIXED
     // return console.log(user)
     // res.json(users);                    // <-- send the result
-    res.render("index", { user });
+    res.render("site/index", { user });
 
   } catch (err) {
     next(err);
