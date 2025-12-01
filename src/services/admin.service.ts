@@ -1,8 +1,14 @@
 import { prisma } from "../lib/prisma.js";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+
+import jwt from "jsonwebtoken";
+
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET
 
 export const userService = {
-    
+
   async doLogin(email: string, password: string) {
     if (!email || !password) {
       throw new Error("Email and password are required.");
@@ -21,11 +27,23 @@ export const userService = {
       throw new Error("Invalid email or password.");
     }
 
-    // return safe fields
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      JWT_SECRET as string,
+      { expiresIn: "1d" } // token valid for 1 day
+    );
+
     return {
-      id: user.id,
-      email: user.email,
-      fullname: user.fullname,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullname: user.fullname,
+      },
+      token,
     };
   },
 

@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { userService } from "../services/admin.service";
+import { AuthRequest } from "../middlewares/authentication.js";
 
-export const dashBoard = async (req:Request, res: Response, next: NextFunction) => {
+export const dashBoard = async (req:AuthRequest, res: Response, next: NextFunction) => {
     try {
 
-        res.render('admin/dashboard')
+        res.render('admin/dashboard', {
+            user: req.user
+        })
 
     } catch(e) {
         console.error("Dashboard render error:", e);
@@ -27,7 +30,19 @@ export const login = async (req:Request, res: Response, next: NextFunction) => {
 export const postLogin = async (req:Request, res: Response, next: NextFunction) => {
     try {
 
-        res.send('email')
+        const {email, password} = req.body
+        const result = await userService.doLogin(email,password)
+
+        res.cookie("token", result.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // only HTTPS in prod
+        sameSite: "strict",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        path: "/"
+        });
+
+
+        res.json(result); 
 
     } catch(e) {
         console.error("Login render error:", e);
@@ -53,5 +68,17 @@ export const saveUser = async (req:Request, res: Response, next: NextFunction) =
     }
 }
 
+export const logUserOut = (req: Request, res: Response) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+    path: "/"
+  });
 
-export default {dashBoard, login, postLogin}
+  res.json({ message: "Logged out" });
+};
+
+
+
+export default {dashBoard, login, postLogin, logUserOut}
