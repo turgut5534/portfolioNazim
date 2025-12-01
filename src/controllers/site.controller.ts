@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { userService } from "../services/index.service";
+import { userService } from "../services/index.service.js";
 
 export const homePage = async (req: Request, res: Response, next: NextFunction) => {
   try {

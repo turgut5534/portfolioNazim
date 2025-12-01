@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import indexRouter from "./routes/index.router";
+import indexRouter from "./routes/index.router.js";
 
 // Fix __dirname for ESM
 const __filename = fileURLToPath(import.meta.url);
