@@ -95,5 +95,22 @@ export const editProfile = async (req: AuthRequest, res: Response) => {
 };
 
 
+export const updateProfile = async (req: AuthRequest, res: Response) => {
 
-export default {dashBoard, login, postLogin, logUserOut, editProfile}
+    try {
+
+         if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const user = await userService.updateInfo(req.user.id, req.body)
+        
+        res.redirect('/admin/profile')
+    } catch(e){
+        console.error("error:", e);
+    }
+};
+
+
+
+export default {dashBoard, login, postLogin, logUserOut, editProfile, updateProfile}

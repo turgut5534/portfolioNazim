@@ -89,5 +89,50 @@ export const userService = {
 
     return user;
 
-  }
+  },
+async updateInfo(userId: number, data: any) {
+  return await prisma.users.update({
+    where: { id: userId },
+
+    data: {
+      // Update users table
+      email: data.email,
+      fullname: data.fullname,
+      age: Number(data.age),
+
+      // Update user_info table
+      user_info: {
+        upsert: {
+          create: {
+            address: data.address,
+            phone: data.phone,
+            instagram: data.instagram,
+            twitter: data.twitter,
+            linkedIn: data.linkedin,
+            facebook: data.facebook,
+            degree: data.degree,
+            github: data.github
+          },
+          update: {
+            address: data.address,
+            phone: data.phone,
+            instagram: data.instagram,
+            twitter: data.twitter,
+            linkedIn: data.linkedin,
+            facebook: data.facebook,
+            degree: data.degree,
+            github: data.github
+          }
+        }
+      }
+    },
+
+    include: {
+      user_info: true
+    }
+  });
+}
+
+
+  
 };
