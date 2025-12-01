@@ -41,8 +41,7 @@ export const postLogin = async (req:Request, res: Response, next: NextFunction) 
         path: "/"
         });
 
-
-        res.json(result); 
+        res.redirect('/admin')
 
     } catch(e) {
         console.error("Login render error:", e);
@@ -76,7 +75,7 @@ export const logUserOut = (req: Request, res: Response) => {
     path: "/"
   });
 
-  res.json({ message: "Logged out" });
+  res.redirect('/admin/login')
 };
 
 

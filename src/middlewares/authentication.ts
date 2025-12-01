@@ -19,7 +19,8 @@ export const authMiddleware = (
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized: No token" });
+      // return res.status(401).json({ message: "Unauthorized: No token" });admin
+      return res.redirect('/admin/login')
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as {
