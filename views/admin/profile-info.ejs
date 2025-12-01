@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile Info</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #1c1f20;
+      color: #fff;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #181a1b;
+      padding: 20px;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .menu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #ccc;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #2a2d2e;
+      color: #fff;
+    }
+
+    /* Content */
+    .content {
+      flex: 1;
+      padding: 40px;
+      max-width: 600px;
+    }
+
+    .content h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .profile-photo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .profile-photo img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #444;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      background: #2a2d2e;
+      border: 1px solid #444;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #0066d6;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+<%- include("partials/sidebar") %>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>Profile Info</h1>
+
+    <div class="profile-photo">
+      <img src="/photos/<%= user.photourl %>" alt="Profile Photo">
+    </div>
+
+<form action="/admin/profile" method="POST">
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" name="email" placeholder="Enter email" value="<%= user.email %>">
+  </div>
+
+  <div class="form-group">
+    <label>Full Name</label>
+    <input type="text" name="fullname" placeholder="Enter your full name" value="<%= user.fullname %>">
+  </div>
+
+  <div class="form-group">
+    <label>Age</label>
+    <input type="number" name="age" placeholder="Enter age" value="<%= user.age %>">
+  </div>
+
+  <div class="form-group">
+    <label>Address</label>
+    <input type="text" name="address" placeholder="Enter your address" value="<%= user.user_info?.address || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label>Phone</label>
+    <input type="text" name="phone" placeholder="Enter phone number" value="<%= user.user_info?.phone || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label>LinkedIn</label>
+    <input type="text" name="linkedin" placeholder="LinkedIn profile URL" value="<%= user.user_info?.linkedIn || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label>Instagram</label>
+    <input type="text" name="instagram" placeholder="Instagram profile URL" value="<%= user.user_info?.instagram || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label>GitHub</label>
+    <input type="text" name="github" placeholder="GitHub profile URL" value="<%= user.user_info?.github || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label>Twitter</label>
+    <input type="text" name="twitter" placeholder="Twitter profile URL" value="<%= user.user_info?.twitter || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label>Facebook</label>
+    <input type="text" name="facebook" placeholder="Facebook profile URL" value="<%= user.user_info?.facebook || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label>Degree</label>
+    <input type="text" name="degree" placeholder="Enter your degree" value="<%= user.user_info?.degree || '' %>">
+  </div>
+
+  <button type="submit">Save Changes</button>
+</form>
+
+
+  </div>
+
+</body>
+</html>

@@ -77,4 +77,17 @@ export const userService = {
 
     return user;
   },
+
+  async getInfo(userId: number) {
+
+    const user= await prisma.users.findUnique({
+      where: {id:userId},
+      include: {
+        user_info: true
+      }
+    })
+
+    return user;
+
+  }
 };

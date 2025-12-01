@@ -78,6 +78,22 @@ export const logUserOut = (req: Request, res: Response) => {
   res.redirect('/admin/login')
 };
 
+export const editProfile = async (req: AuthRequest, res: Response) => {
+
+    try {
+
+         if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const user = await userService.getInfo(req.user.id)
+        
+        res.render('admin/profile-info', {user})
+    } catch(e){
+        console.error("error:", e);
+    }
+};
 
 
-export default {dashBoard, login, postLogin, logUserOut}
+
+export default {dashBoard, login, postLogin, logUserOut, editProfile}

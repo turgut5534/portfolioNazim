@@ -1,11 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #1c1f20;
+      color: #fff;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #181a1b;
+      padding: 20px;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .menu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #ccc;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #2a2d2e;
+      color: #fff;
+    }
+
+    /* Content Area */
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .content h1 {
+      font-size: 26px;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-    
+
+  <!-- Sidebar -->
+<%- include("partials/sidebar") %>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>Welcome to your Dashboard</h1>
+    <p>Select an item from the sidebar.</p>
+  </div>
+
 </body>
 </html>
