@@ -167,6 +167,52 @@ async updateInfo(userId: number, data: any) {
         }
       })
 
+    },
+
+    async updateSkill(userId: number,data: any) {
+
+      const skill= await prisma.user_skills.findUnique({
+        where: {
+          id: parseInt(data.id)
+        }
+      })
+
+      if (!skill) {
+        return await prisma.user_skills.create({
+          data: {
+            user_id: userId,
+            title: data.title,
+            grade: parseInt(data.grade)
+          }
+        })
+      }
+
+      if (skill.user_id !== userId) {
+        throw new Error("Unauthorized");
+      }
+
+      return await prisma.user_skills.update({
+        where: {
+          id: parseInt(data.id),
+        },
+        data: {
+          title:data.title,
+          grade: parseInt(data.grade)
+        }
+      })
+
+    },
+
+    async getExperiences(id: number) {
+
+      const experiences = await prisma.user_experiences.findMany({
+        where: {
+          user_id: id
+        }
+      })
+
+      return experiences
+
     }
   
 };

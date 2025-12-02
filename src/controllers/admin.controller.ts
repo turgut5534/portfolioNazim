@@ -166,7 +166,7 @@ export const addSkills = async (req: AuthRequest, res: Response) => {
 export const deleteSkill = async (req: AuthRequest, res: Response) => {
 
     try{ 
-
+        
         if (!req.user) {
             return res.status(401).send("User not authenticated");
         }
@@ -185,6 +185,58 @@ export const deleteSkill = async (req: AuthRequest, res: Response) => {
     }
 
 };
+
+
+export const updateSkill = async (req: AuthRequest, res: Response) => {
+
+    try{ 
+
+        if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        await userService.updateSkill(req.user.id, req.body)
+
+        res.redirect('/admin/skills')
+        
+    } catch(e) {
+        console.log(e)
+    }
+
+};
+
+
+export const seeExperiences = async (req: AuthRequest, res: Response) => {
+
+    try{ 
+       
+        if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const experiences = await userService.getExperiences(req.user.id)
+
+        res.render('admin/experiences', {experiences})
+        
+    } catch(e) {
+        console.log(e)
+    }
+
+};
+
+
+
+export const portfolio = async (req: AuthRequest, res: Response) => {
+
+    try{ 
+        res.render('admin/portfolio')
+        
+    } catch(e) {
+        console.log(e)
+    }
+
+};
+
 
 
 

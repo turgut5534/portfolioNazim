@@ -1,20 +1,20 @@
-.logout-btn {
-  display: block;
-  padding: 12px 15px;
-  margin-top: 15px;
-  text-align: center;
-  background: #ff4d4d;
-  color: white;
-  font-weight: bold;
-  border-radius: 8px;
-  transition: 0.3s;
-}
+    .logout-btn {
+      display: block;
+      padding: 12px 15px;
+      margin-top: 15px;
+      text-align: center;
+      background: #ff4d4d;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
 
-.logout-btn:hover {
-  background: #e60000;
-  color: #fff;
-  transform: translateY(-2px);
-}
+    .logout-btn:hover {
+      background: #e60000;
+      color: #fff;
+      transform: translateY(-2px);
+    }
 
 
 :root{
@@ -219,4 +219,89 @@
 
 .btn-save:hover {
   background-color: #45a049;
+}
+
+.btn-add {
+  background-color: #4CAF50; /* Fresh green */
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 20%;
+  margin-bottom: 1rem;
+  padding: 10px;
+}
+
+.btn-add:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+
+.btn-delete {
+  background-color: red;
+  color: #181a1b;
+}
+
+.experiences-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.experience-item {
+  background: #2a2d2e;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: white;
+}
+
+.experience-duration {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.experience-description {
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 0.8rem;
+}
+
+.btn-edit:hover {
+  background-color: #0066d6;
+}
+
+.btn-delete {
+  background-color: red;
+  color: #181a1b;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
 }
