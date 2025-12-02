@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 import jwt from "jsonwebtoken";
-import { getSkills } from "../controllers/admin.controller.js";
+import { getSkills, portfolio } from "../controllers/admin.controller.js";
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET
@@ -213,6 +213,20 @@ async updateInfo(userId: number, data: any) {
 
       return experiences
 
+    },
+
+
+      async getPortfolio(id: number) {
+
+      const portfolios = await prisma.portfolios.findMany({
+        where: {
+          user_id: id
+        }
+      })
+
+      return portfolios
+
     }
+  
   
 };

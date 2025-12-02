@@ -229,7 +229,14 @@ export const seeExperiences = async (req: AuthRequest, res: Response) => {
 export const portfolio = async (req: AuthRequest, res: Response) => {
 
     try{ 
-        res.render('admin/portfolio')
+
+         if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const portfolios = await userService.getPortfolio(req.user.id)
+
+        res.render('admin/portfolio', {portfolios})
         
     } catch(e) {
         console.log(e)
