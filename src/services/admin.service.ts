@@ -52,12 +52,10 @@ export const userService = {
       throw new Error("Email and password are required.");
     }
 
-    const existing = await prisma.users.findUnique({
-      where: { email },
-    });
-
-    if (existing) {
-      throw new Error("User already exists.");
+    // ❗ Allow only one user in the entire system
+    const count = await prisma.users.count();
+    if (count > 0) {
+      throw new Error("Only one user is allowed in this system.");
     }
 
     const hashed = await bcrypt.hash(password, 10);

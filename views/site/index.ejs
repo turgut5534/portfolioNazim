@@ -81,11 +81,11 @@
             <div class="profile-card">
               <div class="profile-header">
                 <div class="profile-avatar">
-                  <img src="<%= user.photourl %>" class="img-fluid" alt="">
+                  <img src="/photos/<%= user.photourl %>" class="img-fluid" alt="">
                   <div class="status-indicator"></div>
                 </div>
                 <h3><%= user.fullname %></h3>
-                <span class="role">Full Stack Developer</span>
+                <span class="role"><%= user.user_titles[0]?.title %></span>
                 <div class="rating">
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
