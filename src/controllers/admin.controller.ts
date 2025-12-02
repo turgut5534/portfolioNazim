@@ -125,4 +125,70 @@ export const settings = async (req: AuthRequest, res: Response) => {
 };
 
 
+export const getSkills = async (req: AuthRequest, res: Response) => {
+
+    try{ 
+
+        if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const skills = await userService.getSkills(req.user.id)
+
+        res.render('admin/skills', {skills})
+
+    } catch(e) {
+        
+    }
+
+};
+
+
+export const addSkills = async (req: AuthRequest, res: Response) => {
+
+    try{ 
+
+        if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        await userService.addSkills(req.user.id, req.body.title, req.body.grade)
+
+        res.redirect('/admin/skills')
+        
+    } catch(e) {
+        console.log(e)
+    }
+
+};
+
+
+export const deleteSkill = async (req: AuthRequest, res: Response) => {
+
+    try{ 
+
+        if (!req.user) {
+            return res.status(401).send("User not authenticated");
+        }
+
+        const id= req.params.id
+
+        if (!id) {
+            return res.status(400).send("Skill ID is required");
+        }
+        await userService.deleteSkill(id)
+
+        res.redirect('/admin/skills')
+        
+    } catch(e) {
+        console.log(e)
+    }
+
+};
+
+
+
+
+
+
 export default {dashBoard, login, postLogin, logUserOut, editProfile, updateProfile}

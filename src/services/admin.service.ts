@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 import jwt from "jsonwebtoken";
+import { getSkills } from "../controllers/admin.controller.js";
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET
@@ -130,8 +131,42 @@ async updateInfo(userId: number, data: any) {
       user_info: true
     }
   });
-}
+},
+
+  async getSkills(userId: number) {
+
+    const skills = await prisma.user_skills.findMany({
+      where: {
+        user_id: userId
+      }
+    })
+
+    return skills
+
+  },
 
 
+    async addSkills(userId: number, title: string, grade: string) {
+
+    return await prisma.user_skills.create({
+      data: {
+        user_id: userId,
+        title: title,
+        grade: parseInt(grade)
+      }
+    })
+
+  },
+
+
+    async deleteSkill(id: string) {
+
+      return await prisma.user_skills.delete({
+        where: {
+          id: parseInt(id)
+        }
+      })
+
+    }
   
 };
