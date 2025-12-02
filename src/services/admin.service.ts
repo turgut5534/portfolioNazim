@@ -97,6 +97,7 @@ async updateInfo(userId: number, data: any) {
       email: data.email,
       fullname: data.fullname,
       age: Number(data.age),
+      summary: data.summary,
 
       // Update user_info table
       user_info: {

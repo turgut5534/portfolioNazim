@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #1c1f20;
+      color: #fff;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #181a1b;
+      padding: 20px;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .menu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #ccc;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #2a2d2e;
+      color: #fff;
+    }
+
+    /* Content */
+    .content {
+      flex: 1;
+      padding: 40px;
+      max-width: 600px;
+    }
+
+    .content h1 {
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .setting-item {
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #2a2d2e;
+      padding: 15px 20px;
+      border-radius: 8px;
+      border: 1px solid #3a3e41;
+    }
+
+    .setting-item label {
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #555;
+      border-radius: 24px;
+      transition: 0.2s;
+    }
+
+    .slider::before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    input:checked + .slider {
+      background-color: #007bff;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(24px);
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #0066d6;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+<%- include("partials/sidebar") %>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>Settings</h1>
+
+    <form action="/admin/settings" method="POST">
+
+      <!-- Setting 1 -->
+      <div class="setting-item">
+        <label for="maintenance">Enable Site Maintenance</label>
+
+        <label class="toggle-switch">
+          <input type="checkbox" id="maintenance" name="maintenance">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Setting 2 -->
+      <div class="setting-item">
+        <label for="show_phone">Allow Phone Number to Be Visible</label>
+
+        <label class="toggle-switch">
+          <input type="checkbox" id="show_phone" name="show_phone">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <button type="submit">Save Settings</button>
+    </form>
+  </div>
+
+</body>
+</html>

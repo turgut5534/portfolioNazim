@@ -112,5 +112,17 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
 };
 
 
+export const settings = async (req: AuthRequest, res: Response) => {
+
+    try{ 
+        res.render('admin/settings')
+    } catch(e) {
+        
+    }
+
+   
+
+};
+
 
 export default {dashBoard, login, postLogin, logUserOut, editProfile, updateProfile}
